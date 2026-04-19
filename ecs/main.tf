@@ -129,7 +129,10 @@ resource "aws_appautoscaling_policy" "sqs_scaling" {
       metric_name = "ApproximateNumberOfMessagesVisible"
       namespace   = "AWS/SQS"
       statistic   = "Average"
-      dimensions { name = "QueueName", value = var.sqs_name }
+      dimensions {
+        name  = "QueueName"
+        value = var.sqs_name
+      }
     }
     target_value = 1.0
   }
