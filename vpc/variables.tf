@@ -16,3 +16,27 @@ variable "instance_tenancy" {
 variable "enable_dns_hostnames" {
   default = true
 }
+
+variable "public_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+  default = {
+    "public-1a" = { cidr = "10.0.1.0/24", az = "us-east-1a" }
+    "public-1b" = { cidr = "10.0.2.0/24", az = "us-east-1b" }
+  }
+}
+variable "private_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+  default = {
+    "public-1a" = { cidr = "10.0.10.0/24", az = "us-east-1a" }
+    "public-1b" = { cidr = "10.0.11.0/24", az = "us-east-1b" }
+  }
+}
+variable "enable_subnet_public_ip" {
+  default = true
+}
