@@ -107,3 +107,6 @@ resource "aws_nat_gateway" "main" {
   # To ensure proper ordering, it must depend on the IGW
   depends_on = [aws_internet_gateway.main]
 }
+
+# Create the FREE S3 Gateway Endpoint
+
