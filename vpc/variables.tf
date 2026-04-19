@@ -40,3 +40,8 @@ variable "private_subnets" {
 variable "enable_subnet_public_ip" {
   default = true
 }
+variable "enable_nat_gateway" {
+  description = "If true, a NAT Gateway will be created for private subnets"
+  type        = bool
+  default     = false
+}

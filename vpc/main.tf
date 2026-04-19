@@ -1,3 +1,4 @@
+
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_blocks
   enable_dns_hostnames = var.enable_dns_hostnames
@@ -71,10 +72,38 @@ resource "aws_route_table" "private" {
     Name = "${var.env}-private-rt"
   }
 }
+resource "aws_route" "private_nat_route" {
+  count                  = var.enable_nat_gateway ? 1 : 0
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.main[0].id
+}
 
 # 2. Associate ALL private subnets to this table
 resource "aws_route_table_association" "private" {
   for_each       = aws_subnet.private
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private.id
+}
+
+# 1. Create EIP for NAT (only if enabled)
+resource "aws_eip" "nat" {
+  count  = var.enable_nat_gateway ? 1 : 0
+  domain = "vpc"
+  tags   = { Name = "${var.env}-nat-eip" }
+}
+
+# 2. Create NAT Gateway (only if enabled)
+resource "aws_nat_gateway" "main" {
+  count         = var.enable_nat_gateway ? 1 : 0
+  allocation_id = aws_eip.nat[0].id
+
+  # Pick the first public subnet from your map
+  # values() converts the map to a list so we can grab index 0
+  subnet_id     = values(aws_subnet.public)[0].id
+
+  tags = { Name = "${var.env}-nat-gw" }
+
+  # To ensure proper ordering, it must depend on the IGW
+  depends_on = [aws_internet_gateway.main]
 }
