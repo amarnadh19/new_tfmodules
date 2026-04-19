@@ -16,6 +16,10 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
+resource "aws_s3_bucket_website_configuration" "config" {
+  bucket = aws_s3_bucket.main.id
+  index_document { suffix = "index.html" }
+}
 
 resource "aws_s3_bucket_public_access_block" "open_access" {
   bucket = aws_s3_bucket.main.id
