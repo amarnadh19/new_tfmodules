@@ -117,20 +117,20 @@ resource "aws_appautoscaling_target" "ecs_target" {
   service_namespace  = "ecs"
 }
 
-resource "aws_appautoscaling_policy" "sqs_scaling" {
-  name               = "sqs-backlog-scaling"
-  policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
-  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
-
-  target_tracking_scaling_policy_configuration {
-    customized_metric_specification {
-      metric_name = "ApproximateNumberOfMessagesVisible"
-      namespace   = "AWS/SQS"
-      statistic   = "Average"
-      dimensions { name = "QueueName", value = var.sqs_name }
-    }
-    target_value = 1.0
-  }
-}
+#resource "aws_appautoscaling_policy" "sqs_scaling" {
+#  name               = "sqs-backlog-scaling"
+#  policy_type        = "TargetTrackingScaling"
+#  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
+#  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
+#  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
+#
+#  target_tracking_scaling_policy_configuration {
+#    customized_metric_specification {
+#      metric_name = "ApproximateNumberOfMessagesVisible"
+#      namespace   = "AWS/SQS"
+#      statistic   = "Average"
+#      dimensions { name = "QueueName", value = var.sqs_name }
+#    }
+#    target_value = 1.0
+#  }
+#}
