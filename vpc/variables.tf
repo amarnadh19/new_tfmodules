@@ -6,6 +6,7 @@ variable "org_name" {
 
 variable "aws_service" {
   default = "vpc"
+  description = "aws service name"
 }
 
 variable "instance_tenancy" {
