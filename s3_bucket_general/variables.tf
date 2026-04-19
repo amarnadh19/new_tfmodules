@@ -7,3 +7,5 @@ variable "aws_service" {
   default = "bucket"
   description = "aws service name"
 }
+
+variable "purpose" {}

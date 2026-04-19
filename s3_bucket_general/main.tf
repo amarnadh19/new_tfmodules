@@ -1,5 +1,5 @@
 locals {
-  bucket_name = join("-",[var.env, var.aws_service, var.org_name])
+  bucket_name = join("-",[var.env, var.aws_service, var.org_name,var.purpose])
 }
 
 resource "aws_s3_bucket" "main" {
