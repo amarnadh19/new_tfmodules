@@ -46,6 +46,6 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.main.id
   key          = "index.html"
-  source       = "./index.html" # Path to your local file
+  source       = "index.html" # Path to your local file
   content_type = "text/html"
 }
