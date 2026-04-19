@@ -6,6 +6,6 @@ output "sqs_arn" {
   value = aws_sqs_queue.video_queue.arn
 }
 
-outut "sql_name" {
+output "sql_name" {
   value= aws_sqs_queue.video_queue.name
 }
